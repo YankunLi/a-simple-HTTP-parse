@@ -1,7 +1,11 @@
-#include <assert.h>
+//#include <assert.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <unistd.h>
+#ifndef PARSE_UTILS 201411251555
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 enum CHECK_STATE { CHETC_STATE_REQUESTLINE = 0, CHECK_STATE_HEADER };
 
@@ -20,3 +24,5 @@ HTTP_CODE parse_headers( char* temp );
 
 /* 分析http请求的入口函数 */
 HTTP_CODE parse_content( char* buffer, int& checked_index, CHECK_STATE& checkstate, int& read_index, int& start_line);
+
+#endif
