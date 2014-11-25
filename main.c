@@ -1,4 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <errno.h>
+#include <unistd.h>
 
+#define BUFFER_SIZE 4096
 
 /* master program to parse http header*/
 int main( int argc, char* argv[] )
@@ -28,13 +36,16 @@ int main( int argc, char* argv[] )
     swhitch(errno):
       case EACCES：
         printf( "the address is protected, it doesn't have access.\n" );
-        break;
+        return 1;
+        //break;
       case EADDRINUSE:
         printf( "the address has been used.\n" )
-        break;
+        return 1;
+        //break;
       default:
         printf( "there is a error in bind(...)." );
-        assert(false);
+        return 1;
+        //assert(false);
         //break;
   }
   
