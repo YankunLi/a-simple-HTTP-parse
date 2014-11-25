@@ -6,6 +6,8 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include <parseUtils.h>
+
 #define BUFFER_SIZE 4096
 
 /* master program to parse http header*/
