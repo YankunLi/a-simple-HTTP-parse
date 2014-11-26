@@ -89,18 +89,27 @@ int main( int argc, char* argv[] )
       read_index += data_read;
       /*分析目前应读取到的客户数据*/
       HTTP_CODE result = parse_content( buffer, checked_index, checkstate );
+      int res = 0;
       if ( NO_REQUEST == result )
       {
         continue;
       }
       else if ( GET_REQUEST == result )
       {
-        send( fd, szret[0], strlen( szret[0] ), 0 );
+        res = send( fd, szret[0], strlen( szret[0] ), 0 );
+        if ( -1 == res )
+        {
+          printf("sending fail");
+        }
         break;
       }
       else 
       {
-        send( fd, szret[1], strlen( szret[1] ), 0 );
+        res = send( fd, szret[1], strlen( szret[1] ), 0 );
+         if ( -1 == res )
+        {
+          printf("sending fail");
+        }
         break;
       }
     }
