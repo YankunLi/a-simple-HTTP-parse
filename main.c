@@ -35,7 +35,7 @@ int main( int argc, char* argv[] )
   //assert( -1 != ret );
   if ( -1 != ret )
   {
-    swhitch(errno):
+    swhitch (errno):
       case EACCES：
         printf( "the address is protected, it doesn't have access.\n" );
         return 1;
@@ -63,7 +63,47 @@ int main( int argc, char* argv[] )
   }
   else
   {
-    ...
+    char buffer[BUFFER_SIZE];
+    memset( buffer, '\0', BUFFER_SIZE );
+    int data_read = 0;  
+    int read_index = 0;  //当前已经读取了多少客户端数据
+    int checked_index = 0;  //当前已经分析完的客户数据。
+    int start_line = 0;   //行在buffer中的起始位置
+    /*设置主状态机的初始状态*/
+    CHECK_STATE checkstate = CHECK_STATE_REQUESTING;
+    
+    while ( 1 )
+    {
+      data_read = recv( fd, buffer + read_index, BUFFER_SIZE - read_index, 0);
+      if ( -1 == data_read )
+      {
+        printf("reading failing\n");
+        break;
+      }
+      else if ( 0 == data_read )
+      {
+        printf("remote client has closed the connection\n");
+        break;
+      }
+      
+      read_index += data_read;
+      /*分析目前应读取到的客户数据*/
+      HTTP_CODE result = parse_content( buffer, checked_index, checkstate );
+      if ( NO_REQUEST == result )
+      {
+        continue;
+      }
+      else if ( GET_REQUEST == result )
+      {
+        send( fd, szret[0], strlen( szret[0] ), 0 );
+        break;
+      }
+      else 
+      {
+        send( fd, szret[1], strlen( szret[1] ), 0 );
+        break;
+      }
+    }
     close( fd );
   }
   
