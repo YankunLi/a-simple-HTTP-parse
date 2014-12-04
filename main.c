@@ -8,9 +8,9 @@
 
 #include <parseUtils.h>
 
-#define BUFFER_SIZE 4096
+/*#define BUFFER_SIZE 4096
 
-static const char* szret[] = { "I get a correct result\n", "Something wrong\n" };
+static const char* szret[] = { "I get a correct result\n", "Something wrong\n" };*/
 /* master program to parse http header*/
 int main( int argc, char* argv[] )
 {
